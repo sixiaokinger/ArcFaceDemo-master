@@ -2,6 +2,7 @@ package com.arcsoft.sdk_demo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -130,6 +131,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						if (max < score.getScore()) {
 							max = score.getScore();
 							name = fr.mName;
+
 						}
 					}
 				}
@@ -183,26 +185,28 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						}
 					});
 				}
-//				else {
-//					final String mNameShow = "未识别";
-//					DetecterActivity.this.runOnUiThread(new Runnable() {
-//						@Override
-//						public void run() {
-//							mTextView.setAlpha(1.0f);
-//							mTextView1.setVisibility(View.VISIBLE);
-//							mTextView1.setText( gender + "," + age);
-//							mTextView1.setTextColor(Color.WHITE);
-//							mTextView.setText(mNameShow);
-//							mTextView.setTextColor(Color.WHITE);
-//							mImageView.setImageAlpha(255);
-//							mImageView.setRotation(mCameraRotate - 180);
-//							if (mCameraMirror) {
-//								mImageView.setScaleY(-1);
-//							}
-//							mImageView.setImageBitmap(bmp);
-//						}
-//					});
-//				}
+				else {
+					final String mNameShow = "未识别";
+					DetecterActivity.this.runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							mTextView.setAlpha(1.0f);
+							mTextView1.setVisibility(View.VISIBLE);
+							mTextView1.setText( "相似度             0%");
+							mTextView1.setTextColor(Color.WHITE);
+							mTextView.setText(mNameShow);
+							mTextView.setTextColor(Color.WHITE);
+							mImageView.setImageAlpha(255);
+							mImageView.setRotation(mCameraRotate - 180);
+							if (mCameraMirror) {
+								mImageView.setScaleY(-1);
+							}
+							Resources res = getResources();
+                            Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.nobody);
+							mImageView.setImageBitmap(bmp);
+						}
+					});
+				}
 				mImageNV21 = null;
 			}
 
