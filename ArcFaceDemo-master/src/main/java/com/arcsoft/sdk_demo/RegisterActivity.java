@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ import java.util.List;
  * Created by gqj3375 on 2017/4/27.
  */
 
-public class RegisterActivity extends Activity implements SurfaceHolder.Callback {
+public class RegisterActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
 	private final String TAG = this.getClass().toString();
 	private final static int MSG_CODE = 0x1000;
 	private final static int MSG_EVENT_REG = 0x1001;
@@ -210,6 +211,8 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 		});
 		view.start();
 
+        Button mBack = (Button) findViewById(R.id.register_back);
+        mBack.setOnClickListener(this);
 	}
 
 	/**
@@ -252,7 +255,14 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 		}
 	}
 
-	class UIHandler extends android.os.Handler {
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.register_back) {
+            onBackPressed();
+        }
+    }
+
+    class UIHandler extends android.os.Handler {
 		@Override
 		public void handleMessage(final Message msg) {
 			super.handleMessage(msg);

@@ -21,4 +21,12 @@
         android:scrollbars="none"
         app:dividerHeight="1dp"
         app:listSelector="@android:drawable/list_selector_background"/>
+
+    <Button
+        android:id="@+id/register_back"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:drawable/ic_media_rew" />
 </RelativeLayout>
