@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.InputFilter;
@@ -253,7 +254,7 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 
 	class UIHandler extends android.os.Handler {
 		@Override
-		public void handleMessage(Message msg) {
+		public void handleMessage(final Message msg) {
 			super.handleMessage(msg);
 			if (msg.what == MSG_CODE) {
 				if (msg.arg1 == MSG_EVENT_REG) {
@@ -262,8 +263,8 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 					mEditText = (EditText) layout.findViewById(R.id.editview);
 					mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
 					mExtImageView = (ExtImageView) layout.findViewById(R.id.extimageview);
-					mExtImageView.setImageBitmap((Bitmap) msg.obj);
-					final Bitmap face = (Bitmap) msg.obj;
+                    final Bitmap face = (Bitmap) msg.obj;
+					mExtImageView.setImageBitmap(face);
 					new AlertDialog.Builder(RegisterActivity.this)
 							.setTitle("请输入注册名字")
 							.setIcon(android.R.drawable.ic_dialog_info)
@@ -272,6 +273,8 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									((Application)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace);
+									String name = mEditText.getText().toString();
+                                    ((Application)RegisterActivity.this.getApplicationContext()).saveDrawable(name, face);
 									mRegisterViewAdapter.notifyDataSetChanged();
 									dialog.dismiss();
 								}

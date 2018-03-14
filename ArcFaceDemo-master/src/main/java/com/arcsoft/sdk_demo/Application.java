@@ -1,11 +1,20 @@
 package com.arcsoft.sdk_demo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by gqj3375 on 2017/4/28.
@@ -69,4 +78,21 @@ public class Application extends android.app.Application {
 		}
 		return null;
 	}
+
+    public void saveDrawable(String key, Bitmap bmp) {
+        SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 50, baos);
+        String imageBase64 = new String(Base64.encodeToString(baos.toByteArray(),Base64.DEFAULT));
+        editor.putString(key,imageBase64 );
+        editor.commit();
+    }
+
+    public Drawable getDrawableByKey(String key) {
+        SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        String temp = sharedPreferences.getString(key, "");
+        ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(temp.getBytes(), Base64.DEFAULT));
+        return Drawable.createFromStream(bais, "");
+    }
 }

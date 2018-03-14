@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
@@ -181,7 +182,8 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 								mImageView.setScaleY(-1);
 							}
 							mImageView.setImageAlpha(255);
-							mImageView.setImageBitmap(bmp);
+                            Drawable drawable = ((Application)DetecterActivity.this.getApplicationContext()).getDrawableByKey(mNameShow);
+							mImageView.setImageDrawable(drawable);
 						}
 					});
 				}
